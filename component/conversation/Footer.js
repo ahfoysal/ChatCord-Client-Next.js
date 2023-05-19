@@ -1,5 +1,5 @@
 import React from "react";
-
+import axios from 'axios';
 
 import { IoSend, IoHeart } from "react-icons/io5";
 import { AiFillLike, AiFillPicture, AiFillSmile } from "react-icons/ai";
@@ -11,19 +11,55 @@ const ConversationFooter = ({
   setMessageText,
   setHasTextInput,
   messageText,
+  chatFetch,
 }) => {
+  const cloudinary = {
+    cloud_name: "diwcbidtu",
+    api_key: "829485526543539",
+    api_secret: "n_ESYvxomHsrPMVR8AR4IIAG4yE",
+  };
+  
+  const handleImagePicker = async (e) => {
+    const file = e.target.files[0];
+  
+    if (file.type.match('image.*')) {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "my_chat_images");
+  
+      try {
+        const response = await axios.post(
+          `https://api.cloudinary.com/v1_1/${cloudinary.cloud_name}/upload`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+  
+        console.log(response.data.secure_url);
+        const imageUrl = response.data.secure_url;
+          sendMessage(imageUrl, "image")
+        // update conversation with the image URL
+       // This line needs to be modified or removed. Please update it according to your code.
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+  
   const emojiSize = 25
+  
   return (
     <div className="chat-footer sm:relative flex-none z-10 bg-slate-900">
       <div className="flex flex-row items-center justify-between py-2 px-1">
         {/* gallery icon */}
-        <button
-          type="button"
-          className="flex flex-shrink-0 focus:outline-none mx-2 text-blue-600 hover:text-blue-700 w-6 h-6"
-        >
+        <label htmlFor="image-upload" className="flex flex-shrink-0 focus:outline-none mx-2 text-blue-600 hover:text-blue-700 w-6 h-6">
           {/* replace with react-icon */}
-          <AiFillPicture size={emojiSize} />
-        </button>
+          <AiFillPicture  size={emojiSize} />
+        </label>
+        <input id="image-upload" type="file" accept="image/*" onChange={handleImagePicker} style={{display: 'none'}} />
 
         <div className="relative flex-grow">
           <label>

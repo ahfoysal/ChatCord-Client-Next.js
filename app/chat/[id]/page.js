@@ -4,7 +4,6 @@ import ConversationBody from "@/component/conversation/Body";
 import ConversationFooter from "@/component/conversation/Footer";
 import ConversationHeader from "@/component/conversation/Header";
 
-
 import EmojiPicker from "emoji-picker-react";
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
@@ -16,7 +15,7 @@ let socket;
 const ENDPOINT = process.env.BACKEND;
 
 export default function Home() {
-  const {userData} = MainContext()
+  const { userData } = MainContext();
   const { id } = useParams();
   const [isemojiShown, setIsemojiShown] = useState(false);
   const [chats, setChats] = useState({});
@@ -27,15 +26,14 @@ export default function Home() {
   const [totalPages, setTotalPages] = useState(1);
   const [socketConnected, setSocketConnected] = useState(false);
 
-  const userId = userData?.data?._id
-  
+  const userId = userData?.data?._id;
+
   const [typing, setTyping] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
 
   const conversationID = id;
 
   const chatFetch = async (page = 1) => {
-  
     console.log("fetch");
     if (currentPage !== totalPages) {
       console.log(currentPage, totalPages);
@@ -60,17 +58,17 @@ export default function Home() {
   };
   useEffect(() => {
     socket = io(ENDPOINT);
-if(userId){
-  socket.emit("setup", userData?.data);
-  socket.on("connection", () => setSocketConnected(true));
-  socket.on("connected", () => setSocketConnected(true));
-  socket.on("typing", (room) => {
-    console.log(room.userId, "is typing");
-    if (userId === room.userId) return;
-    setIsTyping(true);
-  });
-  socket.on("stop typing", () => setIsTyping(false));
-}
+    if (userId) {
+      socket.emit("setup", userData?.data);
+      socket.on("connection", () => setSocketConnected(true));
+      socket.on("connected", () => setSocketConnected(true));
+      socket.on("typing", (room) => {
+        console.log(room.userId, "is typing");
+        if (userId === room.userId) return;
+        setIsTyping(true);
+      });
+      socket.on("stop typing", () => setIsTyping(false));
+    }
   }, []);
   useEffect(() => {
     let latestMessageTimestamp = null;
@@ -117,6 +115,9 @@ if(userId){
   useEffect(() => {
     chatFetch();
   }, []);
+
+ 
+  
   const sendMessage = async (messageText, messageType) => {
     console.log("sending");
     console.log(messageText, messageType);
@@ -175,6 +176,8 @@ if(userId){
         sendMessage={sendMessage}
         isemojiShown={isemojiShown}
         setIsemojiShown={setIsemojiShown}
+        chatFetch={chatFetch}
+      
       />
     </section>
   );
