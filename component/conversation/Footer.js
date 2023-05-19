@@ -1,0 +1,77 @@
+import React from "react";
+
+
+import { IoSend, IoHeart } from "react-icons/io5";
+import { AiFillLike, AiFillPicture, AiFillSmile } from "react-icons/ai";
+
+const ConversationFooter = ({
+  isemojiShown,
+  setIsemojiShown,
+  sendMessage,
+  setMessageText,
+  setHasTextInput,
+  messageText,
+}) => {
+  const emojiSize = 25
+  return (
+    <div className="chat-footer sm:relative flex-none z-10 bg-slate-900">
+      <div className="flex flex-row items-center justify-between py-2 px-1">
+        {/* gallery icon */}
+        <button
+          type="button"
+          className="flex flex-shrink-0 focus:outline-none mx-2 text-blue-600 hover:text-blue-700 w-6 h-6"
+        >
+          {/* replace with react-icon */}
+          <AiFillPicture size={emojiSize} />
+        </button>
+
+        <div className="relative flex-grow">
+          <label>
+            <input
+              value={messageText}
+              onChange={(e) => {
+                setMessageText(e.target.value);
+                setHasTextInput(e.target.value.length > 0);
+              }}
+              autoComplete="off"
+              autoCorrect="off"
+              spellCheck="false"
+              placeholder="Type your message..."
+              className="rounded-full py-2 pl-3 pr-10 w-full border border-gray-800 focus:border-gray-700 bg-gray-800 focus:bg-gray-900 focus:outline-none text-gray-200 focus:shadow-md transition duration-300 ease-in"
+            />
+            <button
+              onClick={() => setIsemojiShown(isemojiShown ? false : true)}
+              type="button"
+              className="absolute hidden md:flex  top-0 right-0 mt-2 mr-3  flex-shrink-0 focus:outline-none text-blue-600 hover:text-blue-700 w-6 h-6"
+            >
+              {/* emoji icon */}
+              <AiFillSmile  size={emojiSize}/>
+            </button>
+          </label>
+        </div>
+        {/* show send button when there is input, otherwise show like button */}
+        {messageText.length > 0 ? (
+          <button
+            type="button"
+            onClick={() => sendMessage(messageText, "text")}
+            className="flex flex-shrink-0 focus:outline-none mx-2 text-blue-600 hover:text-blue-700 w-6 h-6"
+          >
+            {/* send icon */}
+            <IoSend size={emojiSize}/>
+          </button>
+        ) : (
+          <button
+            type="button"
+            onClick={() => sendMessage(messageText, "like")}
+            className="flex flex-shrink-0 focus:outline-none mx-2 text-blue-600 hover:text-blue-700 w-6 h-6"
+          >
+            {/* like icon */}
+            <IoHeart  size={emojiSize}/>
+          </button>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default ConversationFooter;

@@ -2,26 +2,119 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+body {
+  --tw-bg-opacity: 1;
+  background-color: rgb(17 17 33 / var(--tw-bg-opacity));
+  font-family: Sora, sans-serif;
+  --tw-text-opacity: 1;
+  
+ 
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+@media screen and (max-width: 480px) {
+  .scroll-feed{
+    max-height: 70% !important;
   }
 }
+html, body {margin: 0; height: 100%; overflow: hidden}
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.text-gradient {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-title {
+  background-image: linear-gradient(to right,var(--tw-gradient-stops));
+  --tw-gradient-from: #ffffff var(--tw-gradient-from-position);
+  --tw-gradient-to: rgba(238,243,244,0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from),var(--tw-gradient-to);
+  --tw-gradient-from-position: 2.08%;
+  --tw-gradient-to: rgba(47,223,251,0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from),#f32458 var(--tw-gradient-via-position),var(--tw-gradient-to);
+  --tw-gradient-via-position: 22.11%;
+  --tw-gradient-to: #605d7a var(--tw-gradient-to-position);
+  --tw-gradient-to-position: 47.67%;
+  --tw-gradient-stops: var(--tw-gradient-from),#c52b66 var(--tw-gradient-via-position),var(--tw-gradient-to);
+  --tw-gradient-via-position: 66.11%;
+  --tw-drop-shadow: drop-shadow(0 0px 40px rgba(54,213,140,.4));
+  --tw-gradient-to: #185ee0 var(--tw-gradient-to-position);
+  --tw-gradient-to-position: 77.67%;
+  --tw-gradient-via-position: 66.11%;
+  --tw-gradient-to: #af858550 var(--tw-gradient-to-position);
+  --tw-gradient-to-position: 99.67%;
+  animation: textAnimation 2s linear infinite;
+}
+
+.login:hover .hero-title {
+  background-image: linear-gradient(to right,var(--tw-gradient-stops));
+  --tw-gradient-from: #c51b46 var(--tw-gradient-from-position);
+  --tw-gradient-to: rgba(238,243,244,0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from),var(--tw-gradient-to);
+  --tw-gradient-from-position: 2.08%;
+  --tw-gradient-to: rgba(163, 199, 116, 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from),#b62f46 var(--tw-gradient-via-position),var(--tw-gradient-to);
+  --tw-gradient-via-position: 19.11%;
+  --tw-drop-shadow: drop-shadow(0 0px 40px rgba(255, 0, 0,.4));
+  --tw-gradient-to: #9b7d7d46 var(--tw-gradient-to-position);
+  --tw-gradient-to-position: 47.67%;
+  --tw-gradient-via-position: 19.11%;
+  --tw-drop-shadow: drop-shadow(0 0px 40px rgba(255, 0, 0,.4));
+  --tw-gradient-to: #e7e7e7ec var(--tw-gradient-to-position);
+  --tw-gradient-to-position: 80.67%;
+  animation: textAnimation 2s linear infinite;
+}
+
+
+
+.group:hover .group-hover\:block {
+  display: block;
+}
+.hover\:w-64:hover {
+  width: 45%;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+::-webkit-scrollbar-thumb {
+  border: 0px none #ffffff;
+  border-radius: 50px;
+  background: #44f1a6;
+  border-radius: 10px;
+  height: 2px;
+  width: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2b6cb0;
+}
+::-webkit-scrollbar-thumb:active {
+  background: #e20522;
+}
+
+.instagram-logo {
+  background-position: 0 -130px;
+  height: 51px;
+  width: 175px;
+  background-image: url(https://bit.ly/3v2LT17);
+}
+.facebook-logo {
+  background-position: -414px -259px;
+  background-image: url(https://bit.ly/3v2LT17);
+  height: 16px;
+  width: 16px;
+}
+.apple-store-logo {
+  background-position: -132px -182px;
+  height: 42px;
+  width: 128px;
+  background-image: url(https://bit.ly/3v2LT17);
+}
+.google-store-logo {
+  background-position: 0 -182px;
+  height: 42px;
+  width: 130px;
+  background-image: url(https://bit.ly/3v2LT17);
 }
