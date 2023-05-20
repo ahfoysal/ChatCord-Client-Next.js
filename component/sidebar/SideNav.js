@@ -7,7 +7,7 @@ import { MainContext } from "@/context/MainContext";
 import { useRouter, usePathname } from "next/navigation";
 import NavFooter from "./Footer";
 import { messaging } from "@/firebase/firebase";
-import { getToken } from "firebase/messaging";
+import { getToken, isSupported } from "firebase/messaging";
 
 const SideNav = () => {
   const [chats, setChats] = useState([]);
@@ -63,12 +63,21 @@ const SideNav = () => {
     }
   }
 
- 
+  useEffect(() => {
+    (async () => {
+        if(userData && userData?.data?._id){
+          const hasFirebaseMessagingSupport = await isSupported();
+          if (hasFirebaseMessagingSupport) {
+            await requestPermission();
+          }
+        }
+    })();
+  }, []);
 
   useEffect(() => {
     if (userData?.data?._id) {
       chatFetch();
-      requestPermission();
+      // requestPermission();
     }
     if (!userData?.data?._id) {
       router.push("/");
