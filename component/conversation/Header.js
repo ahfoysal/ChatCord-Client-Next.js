@@ -8,7 +8,7 @@ import { MdArrowBackIosNew } from "react-icons/md";
 const ConversationHeader = ({ chats, userId }) => {
     const router = useRouter()
     const otherMember = chats?.conversation?.members?.filter(
-        (member) => member.id._id !== userId
+        (member) => member?.id?._id !== userId
       )[0];
     
       const otherMemberName = otherMember?.id?.name;

@@ -39,7 +39,7 @@ const ConversationBody = ({chats, userId}) => {
             ) : (
               <div className="flex flex-row  items-center justify-start">
                 <div className="w-10 h-10 relative flex flex-shrink-0 mr-4">
-                  <Image width={50}  height={50} className="shadow-md rounded-full w-full h-full object-cover" src={sender.id.photoUrl} alt=""/>
+                  <Image width={50}  height={50} className="shadow-md rounded-full w-full h-full object-cover" src={sender?.id?.photoUrl} alt=""/>
                 </div>
                 <div className="messages text-sm text-gray-700 grid grid-flow-row gap-2">
                   {isImageMessage ? (

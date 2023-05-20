@@ -4,6 +4,7 @@ import { LoginRequest } from "@/helper/api";
 import { removeCookie } from "@/helper/cookies";
 import { setCookieWithOptions } from "@/helper/cookies";
 import { decodeJwtToken } from "@/helper/decodeJwt";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
@@ -82,9 +83,16 @@ const LoginPage = () => {
     <div className="bg-[url('https://devconfbd.com/images/star-bg.svg')]">
       <div className="h-screen bg-[url('/images/pattern.png')]  flex flex-col justify-center items-center">
         <div className="border login bg-slate-900 border-slate-700 w-80 py-6 flex items-center flex-col mb-3 transition-all  hover:border-sky-800  ">
-          <h1 className="mb-2 lg:mb-4  font-semibold text-gradient hero-title text-2xl lg:text-3xl text-center lg:text-left mt-2">
+          {/* <h1 className=" mb-2 lg:mb-4  font-semibold text-gradient hero-title text-2xl lg:text-3xl text-center lg:text-left mt-2">
             ChatCord
-          </h1>
+          </h1> */}
+          <Image
+          width={200}
+          height={100}
+            className="py-2    w-56 "
+            src={'/images/logo.svg'}
+            alt=""
+          />
           {login ? (
             <form
               className="mt-4 w-64 flex flex-col"

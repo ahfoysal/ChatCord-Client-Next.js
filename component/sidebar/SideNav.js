@@ -1,15 +1,17 @@
 "use client";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { AiOutlineSend, AiOutlineSearch } from "react-icons/ai";
 import ChatList from "@/component/chat/ChatList";
 import Image from "next/image";
 import { MainContext } from "@/context/MainContext";
 import { useRouter, usePathname } from "next/navigation";
+import NavFooter from "./Footer";
+import { messaging } from "@/firebase/firebase";
+import { getToken } from "firebase/messaging";
 
 const SideNav = () => {
   const [chats, setChats] = useState([]);
-  const { userData } = MainContext();
+  const { userData, setUserData } = MainContext();
   const router = useRouter();
   const isChatPath = usePathname().includes("/chat/");
   const chatId = isChatPath ? usePathname().split("/")[2] : null;
@@ -29,9 +31,41 @@ const SideNav = () => {
     }
   };
 
+    const updateProfile = async (token) => {
+      const profile = {
+        userId: userData?.data?._id,
+        deviceId: token,
+      }
+      console.log(profile);
+      const { data } = await axios.post(
+        `${process.env.BACKEND}api/v1/updateProfile`,
+        profile
+      );
+      console.log(data);
+    }
+  async function requestPermission() {
+    const permission = await Notification.requestPermission();
+    if (permission === "granted") {
+      // Generate Token
+      const token = await getToken(messaging, {
+        vapidKey:
+          "BEX3XjhPUSt46lfmwpqaBRFWRbFlE-CpgL56n3hkAMPYgoWt7dvCRl8GemfS-aRVd8yMlGdwX8TfrKaH8VTz31A",
+      });
+      console.log("Token Gen", token);
+      updateProfile(token)
+
+      // Send this token  to server ( db)
+    } else if (permission === "denied") {
+      alert("You denied for the notification");
+    }
+  }
+
+ 
+
   useEffect(() => {
     if (userData?.data?._id) {
       chatFetch();
+      requestPermission();
     }
     if (!userData?.data?._id) {
       router.push("/");
@@ -40,21 +74,12 @@ const SideNav = () => {
   return (
     <section
       className={
-        (isHidden ? "" : "hidden") +
-        "hidden sm:flex flex-col flex-none overflow-auto w-full sm:w-24 hover:flexclasw-64 group lg:max-w-sm md:w-2/5 transition-all duration-300 ease-in-out"
+        (isHidden ? "hidden" : "") +
+        " nav sm:flex flex relative  flex-col overflow-hidden  flex-none  w-full sm:w-24 hover:flexclasw-64 group lg:max-w-sm md:w-2/5 transition-all duration-300 ease-in-out"
       }
     >
       <div className="header p-4 flex flex-row justify-between items-center flex-none">
-        <div className="py-2 h-16 relative flex flex-shrink-0">
-          {/* logo */}
-          <Image
-            src={userData?.data?.photoUrl}
-            alt={`'s profile`}
-            className="rounded-full"
-            height={50}
-            width={50}
-          />
-        </div>
+        
         <p className="text-md font-bold  md:block group-hover:block">Chats</p>
         <a
           href="#"
@@ -85,11 +110,14 @@ const SideNav = () => {
         </div>
       </div>
 
-      <div className="contacts p-2 flex-1 overflow-x-scroll">
+      <div className="contacts  p-2 pb-32 sm:pb-12 flex-1 overflow-y-scroll overflow-x-hidden">
         {chats?.conversations?.map((chat, index) => (
           <ChatList chat={chat.id} userId={userId} key={index} />
         ))}
+        
       </div>
+      <NavFooter  router={router} setUserData={setUserData} userData={userData}/>
+     
     </section>
   );
 };

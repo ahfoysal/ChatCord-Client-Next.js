@@ -14,56 +14,15 @@ body {
   .scroll-feed{
     max-height: 70% !important;
   }
+  
 }
-html, body {margin: 0; height: 100%; overflow: hidden}
+html, body {margin: 0; height: 100vh; max-height: 100vh; min-height: 100vh; overflow: hidden}
 
 .text-gradient {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
-.hero-title {
-  background-image: linear-gradient(to right,var(--tw-gradient-stops));
-  --tw-gradient-from: #ffffff var(--tw-gradient-from-position);
-  --tw-gradient-to: rgba(238,243,244,0) var(--tw-gradient-to-position);
-  --tw-gradient-stops: var(--tw-gradient-from),var(--tw-gradient-to);
-  --tw-gradient-from-position: 2.08%;
-  --tw-gradient-to: rgba(47,223,251,0) var(--tw-gradient-to-position);
-  --tw-gradient-stops: var(--tw-gradient-from),#f32458 var(--tw-gradient-via-position),var(--tw-gradient-to);
-  --tw-gradient-via-position: 22.11%;
-  --tw-gradient-to: #605d7a var(--tw-gradient-to-position);
-  --tw-gradient-to-position: 47.67%;
-  --tw-gradient-stops: var(--tw-gradient-from),#c52b66 var(--tw-gradient-via-position),var(--tw-gradient-to);
-  --tw-gradient-via-position: 66.11%;
-  --tw-drop-shadow: drop-shadow(0 0px 40px rgba(54,213,140,.4));
-  --tw-gradient-to: #185ee0 var(--tw-gradient-to-position);
-  --tw-gradient-to-position: 77.67%;
-  --tw-gradient-via-position: 66.11%;
-  --tw-gradient-to: #af858550 var(--tw-gradient-to-position);
-  --tw-gradient-to-position: 99.67%;
-  animation: textAnimation 2s linear infinite;
-}
-
-.login:hover .hero-title {
-  background-image: linear-gradient(to right,var(--tw-gradient-stops));
-  --tw-gradient-from: #c51b46 var(--tw-gradient-from-position);
-  --tw-gradient-to: rgba(238,243,244,0) var(--tw-gradient-to-position);
-  --tw-gradient-stops: var(--tw-gradient-from),var(--tw-gradient-to);
-  --tw-gradient-from-position: 2.08%;
-  --tw-gradient-to: rgba(163, 199, 116, 0) var(--tw-gradient-to-position);
-  --tw-gradient-stops: var(--tw-gradient-from),#b62f46 var(--tw-gradient-via-position),var(--tw-gradient-to);
-  --tw-gradient-via-position: 19.11%;
-  --tw-drop-shadow: drop-shadow(0 0px 40px rgba(255, 0, 0,.4));
-  --tw-gradient-to: #9b7d7d46 var(--tw-gradient-to-position);
-  --tw-gradient-to-position: 47.67%;
-  --tw-gradient-via-position: 19.11%;
-  --tw-drop-shadow: drop-shadow(0 0px 40px rgba(255, 0, 0,.4));
-  --tw-gradient-to: #e7e7e7ec var(--tw-gradient-to-position);
-  --tw-gradient-to-position: 80.67%;
-  animation: textAnimation 2s linear infinite;
-}
-
-
 
 .group:hover .group-hover\:block {
   display: block;
@@ -72,6 +31,10 @@ html, body {margin: 0; height: 100%; overflow: hidden}
   width: 45%;
 }
 
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
 ::-webkit-scrollbar {
   width: 4px;
 }
