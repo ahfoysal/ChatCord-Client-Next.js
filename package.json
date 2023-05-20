@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@atlaskit/media-avatar-picker": "^24.3.3",
     "autoprefixer": "10.4.14",
     "axios": "^1.4.0",
     "cloudinary-react": "^1.8.1",
