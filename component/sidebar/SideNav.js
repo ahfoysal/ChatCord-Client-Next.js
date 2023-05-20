@@ -52,7 +52,10 @@ const SideNav = () => {
           "BEX3XjhPUSt46lfmwpqaBRFWRbFlE-CpgL56n3hkAMPYgoWt7dvCRl8GemfS-aRVd8yMlGdwX8TfrKaH8VTz31A",
       });
       console.log("Token Gen", token);
-      updateProfile(token)
+      if(token !== userData?.data?.deviceId) {
+           updateProfile(token)
+
+      }
 
       // Send this token  to server ( db)
     } else if (permission === "denied") {
