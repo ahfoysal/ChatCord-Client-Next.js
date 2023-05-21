@@ -12,9 +12,9 @@ export function ContextProviderS({ children }) {
 
 
   const loggedInCheck = () => {
-
+    firebaseCloudMessaging.init()
     if (decodedToken) {
-      firebaseCloudMessaging.init()
+     
       console.log(decodedToken);
       setUserData(decodedToken);
     }
