@@ -6,6 +6,7 @@ import Image from "next/image";
 import { MainContext } from "@/context/MainContext";
 import { useRouter, usePathname } from "next/navigation";
 import NavFooter from "./Footer";
+import localforage from "localforage";
 
 
 const SideNav = () => {
