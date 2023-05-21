@@ -7,7 +7,7 @@ import ConversationHeader from "@/component/conversation/Header";
 import EmojiPicker from "emoji-picker-react";
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
-
+import { motion } from "framer-motion";
 import axios from "axios";
 import { io } from "socket.io-client";
 import { MainContext } from "@/context/MainContext";
@@ -17,7 +17,7 @@ const ENDPOINT = process.env.BACKEND;
 export default function Home() {
   const { userData } = MainContext();
   const { id } = useParams();
-  const [isemojiShown, setIsemojiShown] = useState(false);
+  const [isEmojiShown, setIsEmojiShown] = useState(false);
   const [chats, setChats] = useState({});
   const [messageText, setMessageText] = useState("");
   const [hasTextInput, setHasTextInput] = useState(false);
@@ -162,23 +162,36 @@ export default function Home() {
       console.error(error);
     }
   };
+  const conversationVariants = {
+    initial: { x: "100%" },
+    animate: { x: "0%" },
+    exit: { x: "100%" }
+  };
+
   return (
-    <section className="bg-[url('https://devconfbd.com/images/star-bg.svg')]  flex sm:flex  flex-col flex-auto border-l relative border-gray-800">
-      <ConversationHeader userId={userId} chats={chats} />
-      <ConversationBody userId={userId} chats={chats} />
-      <div className="absolute  bottom-16 right-10">
-        {isemojiShown && <EmojiPicker />}
-      </div>
-      <ConversationFooter
-        messageText={messageText}
-        setHasTextInput={setHasTextInput}
-        setMessageText={setMessageText}
-        sendMessage={sendMessage}
-        isemojiShown={isemojiShown}
-        setIsemojiShown={setIsemojiShown}
-        chatFetch={chatFetch}
-      
-      />
-    </section>
+    <motion.section
+    className="bg-[url('https://devconfbd.com/images/star-bg.svg')] flex sm:flex flex-col flex-auto border-l relative border-gray-800"
+    variants={conversationVariants}
+    initial="initial"
+    animate={"animate"}
+    exit="exit"
+    transition={{ duration: 0.1 }}
+  >
+    <ConversationHeader userId={userId} chats={chats} />
+    <ConversationBody userId={userId} chats={chats} />
+    <div className="absolute bottom-16 right-10">
+      {isEmojiShown && <EmojiPicker />}
+    </div>
+    <ConversationFooter
+      messageText={messageText}
+      hasTextInput={hasTextInput}
+      setMessageText={setMessageText}
+      setHasTextInput={setHasTextInput}
+      sendMessage={sendMessage}
+      isemojiShown={isEmojiShown}
+      setIsemojiShown={setIsEmojiShown}
+      chatFetch={chatFetch}
+    />
+  </motion.section>
   );
 }
