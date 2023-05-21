@@ -6,8 +6,7 @@ import Image from "next/image";
 import { MainContext } from "@/context/MainContext";
 import { useRouter, usePathname } from "next/navigation";
 import NavFooter from "./Footer";
-import { messaging } from "@/firebase/firebase";
-import { getToken, isSupported } from "firebase/messaging";
+
 
 const SideNav = () => {
   const [chats, setChats] = useState([]);
@@ -43,41 +42,42 @@ const SideNav = () => {
       );
       console.log(data);
     }
-  async function requestPermission() {
-    const permission = await Notification.requestPermission();
-    if (permission === "granted") {
-      // Generate Token
-      const token = await getToken(messaging, {
-        vapidKey:
-          "BEX3XjhPUSt46lfmwpqaBRFWRbFlE-CpgL56n3hkAMPYgoWt7dvCRl8GemfS-aRVd8yMlGdwX8TfrKaH8VTz31A",
-      });
-      console.log("Token Gen", token);
-      if(token !== userData?.data?.deviceId) {
-           updateProfile(token)
+  // async function requestPermission() {
+  //   const permission = await Notification.requestPermission();
+  //   if (permission === "granted") {
+  //     // Generate Token
+  //     const token = await getToken(messaging, {
+  //       vapidKey:
+  //         "BEX3XjhPUSt46lfmwpqaBRFWRbFlE-CpgL56n3hkAMPYgoWt7dvCRl8GemfS-aRVd8yMlGdwX8TfrKaH8VTz31A",
+  //     });
+  //     console.log("Token Gen", token);
+  //     if(token !== userData?.data?.deviceId) {
+  //          updateProfile(token)
 
-      }
+  //     }
 
-      // Send this token  to server ( db)
-    } else if (permission === "denied") {
-      alert("You denied for the notification");
-    }
-  }
+  //     // Send this token  to server ( db)
+  //   } else if (permission === "denied") {
+  //     alert("You denied for the notification");
+  //   }
+  // }
 
-  useEffect(() => {
-    (async () => {
-        if(userData && userData?.data?._id){
-          const hasFirebaseMessagingSupport = await isSupported();
-          if (hasFirebaseMessagingSupport) {
-            await requestPermission();
-          }
-        }
-    })();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //       if(userData && userData?.data?._id){
+  //         const hasFirebaseMessagingSupport = await isSupported();
+  //         if (hasFirebaseMessagingSupport) {
+  //           await requestPermission();
+  //         }
+  //       }
+  //   })();
+  // }, []);
 
   useEffect(() => {
     if (userData?.data?._id) {
       chatFetch();
       // requestPermission();
+ 
     }
     if (!userData?.data?._id) {
       router.push("/");

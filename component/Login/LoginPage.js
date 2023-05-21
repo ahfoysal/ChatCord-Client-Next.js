@@ -1,5 +1,6 @@
 "use client";
 import { MainContext } from "@/context/MainContext";
+import { firebaseCloudMessaging } from "@/firebase/test";
 import { LoginRequest } from "@/helper/api";
 import { removeCookie } from "@/helper/cookies";
 import { setCookieWithOptions } from "@/helper/cookies";
@@ -75,7 +76,7 @@ const LoginPage = () => {
     }
   };
   useEffect(() => {
-   
+    firebaseCloudMessaging.init()
   if(userId)router.push("/chat");
   }, [userId])
 

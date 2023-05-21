@@ -10,7 +10,7 @@ const firebaseConfig = {
   projectId: "chatcord-21e21",
   storageBucket: "chatcord-21e21.appspot.com",
   messagingSenderId: "883070602849",
-  appId: "1:883070602849:web:0d059644500356fdd62420"
+  appId: "1:883070602849:web:24e62d0b5f292de0d62420"
 };
 
 // Initialize Firebase
