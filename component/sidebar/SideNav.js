@@ -64,7 +64,7 @@ const SideNav = () => {
   useEffect(() => {
     if (userData?.data?._id) {
       chatFetch();
-      // requestPermission();
+      requestPermission();
  
     }
     if (!userData?.data?._id) {
