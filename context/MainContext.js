@@ -1,4 +1,5 @@
 "use client";
+import { firebaseCloudMessaging } from "@/firebase/test";
 import { getCookie } from "@/helper/cookies";
 import { decodeJwtToken } from "@/helper/decodeJwt";
 import { createContext, useContext, useEffect, useState } from "react";
@@ -13,6 +14,7 @@ export function ContextProviderS({ children }) {
   const loggedInCheck = () => {
 
     if (decodedToken) {
+      firebaseCloudMessaging.init()
       console.log(decodedToken);
       setUserData(decodedToken);
     }

@@ -4,6 +4,8 @@ import localforage from 'localforage';
 
 const firebaseCloudMessaging = {
   tokenInlocalforage: async () => {
+    const  storage = await localforage.getItem('fcm_token');
+    console.log(storage)
     return localforage.getItem('fcm_token');
   },
 
