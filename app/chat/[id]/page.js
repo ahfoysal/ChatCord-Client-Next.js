@@ -130,6 +130,7 @@ export default function Home() {
       let message = {
         conversationId: conversationID,
         senderId: userId,
+        sender: userData?.data,
         createdAt: Date.now(),
       };
       if (messageType === "text") {
