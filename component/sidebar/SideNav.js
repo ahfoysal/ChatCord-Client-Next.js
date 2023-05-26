@@ -116,6 +116,16 @@ const SideNav = () => {
         {chats?.conversations?.map((chat, index) => (
           <ChatList chat={chat} userId={userId} key={index} />
         ))}
+        {chats?.friends?.length > 0 &&  <>
+        <p className=" font-extrabold py-4">
+          <span className="transition-all   text-gradient  bg-gradient-to-r  from-[#df07f3] to-[#0beaf1]">
+            Friends
+          </span>
+        </p>
+        {chats.friends?.map((user, index) => (
+          <Discover router={router} userId={userId} user={user} key={index} />
+        ))}
+        </>}
         {find && find.length > 0 && (
           <p className="font-extrabold py-4">
             <span className="text-gradient bg-gradient-to-r from-[#7BEFFF] to-[#07C926]">
@@ -134,16 +144,7 @@ const SideNav = () => {
         {find?.map((user, index) => (
           <Discover router={router} userId={userId} user={user} key={index} />
         ))}
-      {chats?.friends?.length > 0 &&  <>
-        <p className=" font-extrabold py-4">
-          <span className="transition-all   text-gradient  bg-gradient-to-r  from-[#df07f3] to-[#0beaf1]">
-            Friends
-          </span>
-        </p>
-        {chats.friends?.map((user, index) => (
-          <Discover router={router} userId={userId} user={user} key={index} />
-        ))}
-        </>}
+      
       </div>
       <NavFooter
         router={router}
