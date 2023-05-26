@@ -10,38 +10,39 @@ function ChatList({ chat, userId }) {
   const otherMemberName = otherMember?.name;
   const otherMemberPhotoUrl = otherMember?.photoUrl;
   const otherMemberIsActive = otherMember?.isActive;
-  console.log(otherMemberName, otherMemberPhotoUrl, otherMemberIsActive)
+
 
   return (
     <Link
-      href={`/chat/${chat._id}`}
-      className="flex  items-center p-2 hover:bg-gray-800 rounded-lg relative"
+      href={`/chat/${chat?._id}`}
+      className="flex w-full  items-center py-3 px-2  hover:bg-gray-800 rounded-lg relative "
     >
-      <div className="w-14 h-14 relative flex flex-shrink-0 ">
+      <div className="w-10 h-10 relative flex flex-shrink-0  ">
         <Image
           width={500}
+          
           height={500}
           className="shadow-md rounded-full w-full h-full object-cover"
           src={otherMemberPhotoUrl}
           alt="User2"
         />
         {otherMemberIsActive && (
-          <div className="absolute bg-gray-900 p-1 rounded-full bottom-0 right-0">
+          <div className="absolute bg-gray-900  rounded-full bottom-0 right-0">
             <div class="bg-green-500 rounded-full w-3 h-3"></div>
           </div>
         )}
       </div>
-      <div className=" flex-auto min-w-0 ml-3 sm:hidden   md:block ">
+      <div className="  min-w-0 ml-3   sm:hidden   md:block ">
         {<p>{otherMemberName}</p>}
         <div className="flex w-full justify-between flex-row items-center text-sm text-gray-600">
-          <p className="w-36  truncate md:w-full overflow-hidden">
+          <p className="w-36  truncate  overflow-hidden">
             {userId === chat?.lastMessage?.senderId && "You: "}
             {chat?.lastMessage?.messageType === "image"
               ? "sent a photo"
               : chat?.lastMessage?.text}
             .
           </p>
-          <p >
+          <p  className="w-full ml-1">
             {GetTimeAgo(chat?.lastMessage?.createdAt)}
           </p>
         </div>

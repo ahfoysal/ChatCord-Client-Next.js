@@ -3,7 +3,7 @@
    /** @type {import('next').NextConfig} */
     const nextConfig = {
         images: {
-            domains: ['i.pravatar.cc', "static.wikia.nocookie.net", "res.cloudinary.com"],
+            domains: ['i.pravatar.cc', "static.wikia.nocookie.net", "res.cloudinary.com","cdn.pixabay.com"],
           },
           env: {
             BACKEND: "https://chatcord-xp6j.onrender.com/",
