@@ -74,10 +74,10 @@ export default function Home() {
     let latestMessageTimestamp = null;
 
     const handleNewMessage = (newMessage) => {
+      console.log(newMessage?.text, "from socket io");
       if (newMessage?.messageType === "image") {
         chatFetch();
       }
-      console.log(newMessage?.text, "from socket io");
 
       if (latestMessageTimestamp === newMessage?.time) {
         return console.log("duplicate");
@@ -87,27 +87,15 @@ export default function Home() {
 
       setChats((prevChats) => ({
         ...prevChats,
-        conversation: {
-          ...prevChats.conversation,
-          messages: [newMessage, ...prevChats.messages],
-        },
-      }));
 
-      // save updated chats object to AsyncStorage
-      // const updatedChats = {
-      //   ...chats,
-      //   conversation: {
-      //     ...chats.conversation,
-      //     messages: [newMessage, ...chats.conversation.messages],
-      //   },
-      // };
-      // setDataToAsyncStorage(conversationID, updatedChats);
+        messages: [newMessage, ...prevChats.messages],
+      }));
     };
 
     socket.on("message received", handleNewMessage);
-
     return () => {
       socket.off("message received", handleNewMessage);
+
       latestMessageTimestamp = null;
     };
   }, []);
@@ -116,8 +104,6 @@ export default function Home() {
     chatFetch();
   }, []);
 
- 
-  
   const sendMessage = async (messageText, messageType) => {
     console.log("sending");
     console.log(messageText, messageType);
@@ -142,10 +128,7 @@ export default function Home() {
       }
       setChats((prevChats) => ({
         ...prevChats,
-        conversation: {
-          ...prevChats.conversation,
-          messages: [message, ...prevChats.messages],
-        },
+        messages: [message, ...prevChats.messages],
       }));
       socket.emit("new message", {
         message,
@@ -166,33 +149,33 @@ export default function Home() {
   const conversationVariants = {
     initial: { x: "100%" },
     animate: { x: "0%" },
-    exit: { x: "100%" }
+    exit: { x: "100%" },
   };
 
   return (
     <motion.section
-    className="bg-[url('https://devconfbd.com/images/star-bg.svg')] flex sm:flex flex-col flex-auto border-l relative border-gray-800"
-    variants={conversationVariants}
-    initial="initial"
-    animate={"animate"}
-    exit="exit"
-    transition={{ duration: 0.1 }}
-  >
-    <ConversationHeader userId={userId} chats={chats} />
-    <ConversationBody userId={userId} chats={chats} />
-    <div className="absolute bottom-16 right-10">
-      {isEmojiShown && <EmojiPicker />}
-    </div>
-    <ConversationFooter
-      messageText={messageText}
-      hasTextInput={hasTextInput}
-      setMessageText={setMessageText}
-      setHasTextInput={setHasTextInput}
-      sendMessage={sendMessage}
-      isemojiShown={isEmojiShown}
-      setIsemojiShown={setIsEmojiShown}
-      chatFetch={chatFetch}
-    />
-  </motion.section>
+      className="bg-[url('https://devconfbd.com/images/star-bg.svg')] flex sm:flex flex-col flex-auto border-l relative border-gray-800"
+      variants={conversationVariants}
+      initial="initial"
+      animate={"animate"}
+      exit="exit"
+      transition={{ duration: 0.1 }}
+    >
+      <ConversationHeader userId={userId} chats={chats} />
+      <ConversationBody userId={userId} chats={chats} />
+      <div className="absolute bottom-16 right-10">
+        {isEmojiShown && <EmojiPicker />}
+      </div>
+      <ConversationFooter
+        messageText={messageText}
+        hasTextInput={hasTextInput}
+        setMessageText={setMessageText}
+        setHasTextInput={setHasTextInput}
+        sendMessage={sendMessage}
+        isemojiShown={isEmojiShown}
+        setIsemojiShown={setIsEmojiShown}
+        chatFetch={chatFetch}
+      />
+    </motion.section>
   );
 }

@@ -14,7 +14,7 @@ const ConversationHeader = ({ chats, userId }) => {
       const otherMemberName = otherMember?.name;
       const otherMemberPhotoUrl = otherMember?.photoUrl;
       const otherMemberIsActive = otherMember?.isActive;
-      console.log(chats, otherMemberPhotoUrl)
+      // console.log(chats, otherMemberPhotoUrl)
   return (
     <div className="chat-header px-2 py-4 flex flex-row flex-none justify-between items-center shadow">
      <div className="flex flex-row items-center">

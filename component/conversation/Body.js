@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 
 const ConversationBody = ({chats, userId}) => {
 
-  console.log(chats, userId);
+  // console.log(chats, userId);
   
   const reversedMessages = chats?.messages ? [...chats.messages].reverse() : [];
   return (
