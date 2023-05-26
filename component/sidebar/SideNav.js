@@ -134,7 +134,7 @@ const SideNav = () => {
         {find?.map((user, index) => (
           <Discover router={router} userId={userId} user={user} key={index} />
         ))}
-      {chats.friends.length > 0 &&  <>
+      {chats?.friends?.length > 0 &&  <>
         <p className=" font-extrabold py-4">
           <span className="transition-all   text-gradient  bg-gradient-to-r  from-[#df07f3] to-[#0beaf1]">
             Friends
