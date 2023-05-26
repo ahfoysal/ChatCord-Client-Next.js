@@ -46,7 +46,7 @@ export default function Home() {
         }
       );
       setChats(response.data);
-      // console.log(response.data);
+      console.log(response.data);
       setCurrentPage(response.data.currentPage);
       setTotalPages(response.data.totalPages);
       socket.emit("join chat", conversationID);
@@ -89,7 +89,7 @@ export default function Home() {
         ...prevChats,
         conversation: {
           ...prevChats.conversation,
-          messages: [newMessage, ...prevChats.conversation.messages],
+          messages: [newMessage, ...prevChats.messages],
         },
       }));
 
@@ -121,7 +121,7 @@ export default function Home() {
   const sendMessage = async (messageText, messageType) => {
     console.log("sending");
     console.log(messageText, messageType);
-    socket.emit("stop typing", chats.conversation._id);
+    socket.emit("stop typing", chats._id);
     if (messageType !== "image" && !hasTextInput) {
       return console.log("ok");
     }
@@ -144,7 +144,7 @@ export default function Home() {
         ...prevChats,
         conversation: {
           ...prevChats.conversation,
-          messages: [message, ...prevChats.conversation.messages],
+          messages: [message, ...prevChats.messages],
         },
       }));
       socket.emit("new message", {

@@ -7,16 +7,16 @@ import { motion } from 'framer-motion';
 
 const ConversationBody = ({chats, userId}) => {
 
+  console.log(chats, userId);
   
-  
-  const reversedMessages = chats?.conversation?.messages ? [...chats.conversation.messages].reverse() : [];
+  const reversedMessages = chats?.messages ? [...chats.messages].reverse() : [];
   return (
     <ScrollableFeed className=" p-4  sm:pb-0 scroll-feed flex-1" >
      {reversedMessages.map((message, index) => {
         const isMe = message?.senderId === userId;
         const isImageMessage = message?.messageType === 'image';
-        const sender = chats?.conversation?.members?.filter(
-          (member) => member?.id?._id === message?.senderId
+        const sender = chats?.members?.filter(
+          (member) => member?._id === message?.senderId
         )[0];
        
         return (
@@ -40,7 +40,7 @@ const ConversationBody = ({chats, userId}) => {
           ) : (
             <div className="flex flex-row  items-center justify-start">
               <div className="w-10 h-10 relative flex flex-shrink-0 mr-4">
-                <Image width={50} height={50} className="shadow-md rounded-full w-full h-full object-cover" src={sender?.id?.photoUrl} alt=""/>
+                <Image width={50} height={50} className="shadow-md rounded-full w-full h-full object-cover" src={sender?.photoUrl} alt=""/>
               </div>
               <div className="messages text-sm text-gray-700 grid grid-flow-row gap-2">
                 {isImageMessage ? (

@@ -24,7 +24,7 @@ const SideNav = () => {
       const { data } = await axios.get(
         `${process.env.BACKEND}api/v1/user/${userId}`
       );
-      // console.log(data);
+      console.log(data);
       setChats(data);
     } catch (error) {
       console.error(error);
@@ -113,7 +113,7 @@ const SideNav = () => {
 
       <div className="contacts  p-2 pb-32 sm:pb-12 flex-1 overflow-y-scroll overflow-x-hidden">
         {chats?.conversations?.map((chat, index) => (
-          <ChatList chat={chat.id} userId={userId} key={index} />
+          <ChatList chat={chat} userId={userId} key={index} />
         ))}
         
       </div>

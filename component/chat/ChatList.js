@@ -4,12 +4,13 @@ import Link from "next/link";
 
 function ChatList({ chat, userId }) {
   const otherMember = chat?.members?.filter(
-    (member) => member?.id?._id !== userId
+    (member) => member?._id !== userId
   )[0];
 
-  const otherMemberName = otherMember?.id?.name;
-  const otherMemberPhotoUrl = otherMember?.id?.photoUrl;
-  const otherMemberIsActive = otherMember?.id?.isActive;
+  const otherMemberName = otherMember?.name;
+  const otherMemberPhotoUrl = otherMember?.photoUrl;
+  const otherMemberIsActive = otherMember?.isActive;
+  console.log(otherMemberName, otherMemberPhotoUrl, otherMemberIsActive)
 
   return (
     <Link
