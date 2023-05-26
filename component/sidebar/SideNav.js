@@ -10,7 +10,6 @@ import { BsPencilSquare } from "react-icons/bs";
 import { BiSearch } from "react-icons/bi";
 import Discover from "../chat/DiscoverList";
 
-
 const SideNav = () => {
   const [chats, setChats] = useState([]);
   const [find, setFind] = useState([]);
@@ -38,23 +37,22 @@ const SideNav = () => {
     const profile = {
       userId: userData?.data?._id,
       deviceId: token,
-    }
+    };
     console.log(profile);
     const { data } = await axios.post(
       `${process.env.BACKEND}api/v1/updateProfile`,
       profile
     );
     console.log(data);
-  }
+  };
   async function requestPermission() {
     const permission = await Notification.requestPermission();
     if (permission === "granted") {
       // Generate Token
-      const token = await localforage.getItem('fcm_token');
+      const token = await localforage.getItem("fcm_token");
       console.log("Token Gen", token);
       if (token !== userData?.data?.deviceId) {
         //  updateProfile(token)
-
       }
 
       // Send this token  to server ( db)
@@ -75,19 +73,17 @@ const SideNav = () => {
     }
   };
 
-
   useEffect(() => {
     if (userData?.data?._id) {
       chatFetch();
-      discover()
+      discover();
       requestPermission();
-
     }
     if (!userData?.data?._id) {
       router.push("/");
     }
   }, [userData]);
-  
+
   return (
     <section
       className={
@@ -96,11 +92,8 @@ const SideNav = () => {
       }
     >
       <div className="header p-4 flex flex-row justify-between items-center flex-none">
-
         <p className="text-md font-bold  md:block group-hover:block">Chats</p>
-        <button
-          className="block rounded-full hover:bg-gray-700 bg-gray-800 w-10 h-10 p-2  md:block group-hover:block"
-        >
+        <button className="block rounded-full hover:bg-gray-700 bg-gray-800 w-10 h-10 p-2  md:block group-hover:block">
           <BsPencilSquare className="w-full h-full" />
         </button>
       </div>
@@ -114,7 +107,6 @@ const SideNav = () => {
             />
             <span className="absolute top-0 left-0 mt-2 ml-3 inline-block">
               <BiSearch className="w-6 h-6" />
-
             </span>
           </label>
         </div>
@@ -124,26 +116,40 @@ const SideNav = () => {
         {chats?.conversations?.map((chat, index) => (
           <ChatList chat={chat} userId={userId} key={index} />
         ))}
-        <p className=" font-extrabold py-4">
-          <span className=" text-gradient  bg-gradient-to-r   from-[#7BEFFF] to-[#07C926]">
-          More  
-          </span> 
-          {"  "}
-            <span className="transition-all   text-gradient  bg-gradient-to-r  from-[#df07f3] to-[#0beaf1]">
-            on
+        {find && find.length > 0 && (
+          <p className="font-extrabold py-4">
+            <span className="text-gradient bg-gradient-to-r from-[#7BEFFF] to-[#07C926]">
+              More
             </span>
-          {"  "}
-          <span className=" text-gradient  bg-gradient-to-r  to-[#FFE602] from-[#FF1585]">
-            ChatCord
+            {"  "}
+            <span className="transition-all text-gradient bg-gradient-to-r from-[#df07f3] to-[#0beaf1]">
+              on
+            </span>
+            {"  "}
+            <span className="text-gradient bg-gradient-to-r to-[#FFE602] from-[#FF1585]">
+              ChatCord
+            </span>
+          </p>
+        )}
+        {find?.map((user, index) => (
+          <Discover router={router} userId={userId} user={user} key={index} />
+        ))}
+      {chats.friends.length > 0 &&  <>
+        <p className=" font-extrabold py-4">
+          <span className="transition-all   text-gradient  bg-gradient-to-r  from-[#df07f3] to-[#0beaf1]">
+            Friends
           </span>
         </p>
-        {find?.map((user, index) => (
-            <Discover router={router} userId={userId} user={user} key={index} />
+        {chats.friends?.map((user, index) => (
+          <Discover router={router} userId={userId} user={user} key={index} />
         ))}
-
+        </>}
       </div>
-      <NavFooter router={router} setUserData={setUserData} userData={userData} />
-
+      <NavFooter
+        router={router}
+        setUserData={setUserData}
+        userData={userData}
+      />
     </section>
   );
 };

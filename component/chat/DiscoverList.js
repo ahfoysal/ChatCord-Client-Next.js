@@ -3,16 +3,16 @@ import Image from "next/image";
 
 
 function Discover({ user, router, userId }) {
-  console.log(user._id, userId);
+
 
     const handleClick = async () => {
-      // const response = await axios.post(
-      //   `${process.env.BACKEND}api/v1/newfriend`,
-      //   {
-      //     senderId: userId,
-      //     receiverId: user._id,
-      //   }
-      // );
+      const response = await axios.post(
+        `${process.env.BACKEND}api/v1/newfriend`,
+        {
+          senderId: userId,
+          receiverId: user._id,
+        }
+      );
       const { data } = await axios.post(
         `${process.env.BACKEND}api/v1/newConversation`,
         {
@@ -20,8 +20,8 @@ function Discover({ user, router, userId }) {
           Receiver: user._id,
         }
       );
-      console.log( data, data.conversations._id); 
-      router.push(`/chat/${data.conversations._id}`);
+      console.log( data, data.conversation._id); 
+      router.push(`/chat/${data.conversation._id}`);
     }
 
   return (
