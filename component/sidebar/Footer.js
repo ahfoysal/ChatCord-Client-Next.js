@@ -1,11 +1,11 @@
-import Image from "next/image";
-import React from "react";
-import { IoPowerSharp, IoSettingsOutline } from "react-icons/io5";
-import { removeCookie } from "@/helper/cookies";
+import Image from "next/image"
+import React from "react"
+import { IoPowerSharp, IoSettingsOutline } from "react-icons/io5"
+import { removeCookie } from "@/helper/cookies"
 
 const NavFooter = ({ userData, router, setUserData }) => {
   return (
-    <div className=" absolute sm:hidden md:flex bottom-20 sm:bottom-2 justify-center z-10 w-full flex">
+    <div className=" fixed sm:hidden md:flex bottom-0 sm:bottom-2 justify-center z-10 w-full flex">
       <div className="flex items-center gap-5  bg-slate-900 shadow-md shadow-black w-fit justify-center rounded-lg px-4 py-3">
         <div className="w-8 h-8 relative flex flex-shrink-0">
           <Image
@@ -26,16 +26,16 @@ const NavFooter = ({ userData, router, setUserData }) => {
           type="button"
           className="flex flex-shrink-0 focus:outline-none hover:  text-white-600 hover:text-blue-700 "
           onClick={() => {
-             removeCookie("user"); 
-             setUserData({})
-            router.push("/");
+            removeCookie("user")
+            setUserData({})
+            router.push("/")
           }}
         >
           <IoPowerSharp size={28} />
         </button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default NavFooter;
+export default NavFooter

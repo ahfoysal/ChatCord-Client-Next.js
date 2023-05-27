@@ -11,16 +11,14 @@ function ChatList({ chat, userId }) {
   const otherMemberPhotoUrl = otherMember?.photoUrl;
   const otherMemberIsActive = otherMember?.isActive;
 
-
   return (
     <Link
       href={`/chat/${chat?._id}`}
       className="flex w-full  items-center py-3 px-2  hover:bg-gray-800 rounded-lg relative "
     >
-      <div className="w-10 h-10 relative flex flex-shrink-0  ">
+      <div className="w-12 h-12 relative flex flex-shrink-0  ">
         <Image
           width={500}
-          
           height={500}
           className="shadow-md rounded-full w-full h-full object-cover"
           src={otherMemberPhotoUrl}
@@ -32,20 +30,22 @@ function ChatList({ chat, userId }) {
           </div>
         )}
       </div>
-      <div className="  min-w-0 ml-3   sm:hidden   md:block ">
+      <div className="  min-w-0 ml-3  w-full sm:hidden   md:block ">
         {<p>{otherMemberName}</p>}
-        <div className="flex w-full justify-between flex-row items-center text-sm text-gray-600">
-          <p className="w-36  truncate  overflow-hidden">
-            {userId === chat?.lastMessage?.senderId && "You: "}
-            {chat?.lastMessage?.messageType === "image"
-              ? "sent a photo"
-              : chat?.lastMessage?.text}
-            .
-          </p>
-          <p  className="w-full ml-1">
-            {GetTimeAgo(chat?.lastMessage?.createdAt)}
-          </p>
-        </div>
+        {chat?.lastMessage && (
+          <div className="flex w-full justify-between flex-row items-center text-sm ">
+            <p className="w-3/4 truncate overflow-hidden ">
+              {userId === chat?.lastMessage?.senderId && "You: "}
+              {chat?.lastMessage?.messageType === "image"
+                ? "sent a photo"
+                : chat?.lastMessage?.text}
+               ·
+            </p>
+            <p className="w-1/4 text-right text-gray-600">
+              {GetTimeAgo(chat?.lastMessage?.createdAt)}
+            </p>
+          </div>
+        )}
       </div>
       {/* is seeen  */}
       {/* <div className="w-4 h-4 flex flex-shrink-0 hidden md:block group-hover:block">
