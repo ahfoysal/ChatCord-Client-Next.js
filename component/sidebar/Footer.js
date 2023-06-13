@@ -5,7 +5,7 @@ import { removeCookie } from "@/helper/cookies"
 
 const NavFooter = ({ userData, router, setUserData }) => {
   return (
-    <div className=" fixed sm:hidden md:flex bottom-0 sm:bottom-2 justify-center z-10 w-full flex">
+    <div className=" fixed sm:hidden md:flex bottom-0 sm:bottom-2 justify-center z-10  flex w-full sm:w-24 hover:flexclasw-64 group lg:max-w-sm md:w-2/5 ">
       <div className="flex items-center gap-5  bg-slate-900 shadow-md shadow-black w-fit justify-center rounded-lg px-4 py-3">
         <div className="w-8 h-8 relative flex flex-shrink-0">
           <Image

@@ -7,16 +7,18 @@ body {
   background-color: rgb(17 17 33 / var(--tw-bg-opacity));
   font-family: Sora, sans-serif;
   --tw-text-opacity: 1;
-  
- 
 }
 @media screen and (max-width: 480px) {
-  .scroll-feed{
+  .scroll-feed {
     max-height: 70% !important;
   }
-  
 }
-html, body {margin: 0; height: 100%;  overflow: hidden}
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+}
 
 .text-gradient {
   -webkit-background-clip: text;

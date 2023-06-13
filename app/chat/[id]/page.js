@@ -1,42 +1,42 @@
-"use client";
+"use client"
 
-import ConversationBody from "@/component/conversation/Body";
-import ConversationFooter from "@/component/conversation/Footer";
-import ConversationHeader from "@/component/conversation/Header";
+import ConversationBody from "@/component/conversation/Body"
+import ConversationFooter from "@/component/conversation/Footer"
+import ConversationHeader from "@/component/conversation/Header"
 
-import EmojiPicker from "emoji-picker-react";
-import { useState, useEffect } from "react";
-import { useParams } from "next/navigation";
-import { motion } from "framer-motion";
-import axios from "axios";
-import { io } from "socket.io-client";
-import { MainContext } from "@/context/MainContext";
-let socket;
-const ENDPOINT = process.env.BACKEND;
+import EmojiPicker from "emoji-picker-react"
+import { useState, useEffect } from "react"
+import { useParams } from "next/navigation"
+import { motion } from "framer-motion"
+import axios from "axios"
+import { io } from "socket.io-client"
+import { MainContext } from "@/context/MainContext"
+let socket
+const ENDPOINT = process.env.BACKEND
 
 export default function Home() {
-  const { userData } = MainContext();
-  const { id } = useParams();
-  const [isEmojiShown, setIsEmojiShown] = useState(false);
-  const [chats, setChats] = useState({});
-  const [messageText, setMessageText] = useState("");
-  const [hasTextInput, setHasTextInput] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [socketConnected, setSocketConnected] = useState(false);
+  const { userData } = MainContext()
+  const { id } = useParams()
+  const [isEmojiShown, setIsEmojiShown] = useState(false)
+  const [chats, setChats] = useState({})
+  const [messageText, setMessageText] = useState("")
+  const [hasTextInput, setHasTextInput] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
+  const [socketConnected, setSocketConnected] = useState(false)
 
-  const userId = userData?.data?._id;
+  const userId = userData?.data?._id
 
-  const [typing, setTyping] = useState(false);
-  const [isTyping, setIsTyping] = useState(false);
+  const [typing, setTyping] = useState(false)
+  const [isTyping, setIsTyping] = useState(false)
 
-  const conversationID = id;
+  const conversationID = id
 
   const chatFetch = async (page = 1) => {
-    console.log("fetch");
+    console.log("fetch")
     if (currentPage !== totalPages) {
-      console.log(currentPage, totalPages);
+      console.log(currentPage, totalPages)
     }
     try {
       const response = await axios.get(
@@ -44,113 +44,113 @@ export default function Home() {
         {
           params: { page },
         }
-      );
-      setChats(response.data);
-      console.log(response.data);
-      setCurrentPage(response.data.currentPage);
-      setTotalPages(response.data.totalPages);
-      socket.emit("join chat", conversationID);
+      )
+      setChats(response.data)
+      console.log(response.data)
+      setCurrentPage(response.data.currentPage)
+      setTotalPages(response.data.totalPages)
+      socket.emit("join chat", conversationID)
     } catch (error) {
-      console.error(error);
+      console.error(error)
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
   useEffect(() => {
-    socket = io(ENDPOINT);
+    socket = io(ENDPOINT)
     if (userId) {
-      socket.emit("setup", userData?.data);
-      socket.on("connection", () => setSocketConnected(true));
-      socket.on("connected", () => setSocketConnected(true));
+      socket.emit("setup", userData?.data)
+      socket.on("connection", () => setSocketConnected(true))
+      socket.on("connected", () => setSocketConnected(true))
       socket.on("typing", (room) => {
-        console.log(room.userId, "is typing");
-        if (userId === room.userId) return;
-        setIsTyping(true);
-      });
-      socket.on("stop typing", () => setIsTyping(false));
+        console.log(room.userId, "is typing")
+        if (userId === room.userId) return
+        setIsTyping(true)
+      })
+      socket.on("stop typing", () => setIsTyping(false))
     }
-  }, []);
+  }, [])
   useEffect(() => {
-    let latestMessageTimestamp = null;
+    let latestMessageTimestamp = null
 
     const handleNewMessage = (newMessage) => {
-      console.log(newMessage?.text, "from socket io");
+      console.log(newMessage?.text, "from socket io")
       if (newMessage?.messageType === "image") {
-        chatFetch();
+        chatFetch()
       }
 
       if (latestMessageTimestamp === newMessage?.time) {
-        return console.log("duplicate");
+        return console.log("duplicate")
       }
 
-      latestMessageTimestamp = newMessage?.time;
+      latestMessageTimestamp = newMessage?.time
 
       setChats((prevChats) => ({
         ...prevChats,
 
         messages: [newMessage, ...prevChats.messages],
-      }));
-    };
+      }))
+    }
 
-    socket.on("message received", handleNewMessage);
+    socket.on("message received", handleNewMessage)
     return () => {
-      socket.off("message received", handleNewMessage);
+      socket.off("message received", handleNewMessage)
 
-      latestMessageTimestamp = null;
-    };
-  }, []);
+      latestMessageTimestamp = null
+    }
+  }, [])
 
   useEffect(() => {
-    chatFetch();
-  }, []);
+    chatFetch()
+  }, [])
 
   const sendMessage = async (messageText, messageType) => {
-    console.log("sending");
-    console.log(messageText, messageType);
-    socket.emit("stop typing", chats._id);
+    console.log("sending")
+    console.log(messageText, messageType)
+    socket.emit("stop typing", chats._id)
     if (messageType !== "image" && !hasTextInput) {
-      return console.log("ok");
+      return console.log("ok")
     }
     try {
-      setMessageText("");
+      setMessageText("")
       let message = {
         conversationId: conversationID,
         senderId: userId,
         sender: userData?.data,
         createdAt: Date.now(),
-      };
+      }
       if (messageType === "text") {
-        message.text = messageText;
-        message.messageType = "text";
+        message.text = messageText
+        message.messageType = "text"
       } else if (messageType === "image") {
-        message.text = messageText;
-        message.messageType = "image";
+        message.text = messageText
+        message.messageType = "image"
       }
       setChats((prevChats) => ({
         ...prevChats,
         messages: [message, ...prevChats.messages],
-      }));
+      }))
       socket.emit("new message", {
         message,
         chats,
-      });
+      })
       const response = await axios.post(
         `${process.env.BACKEND}api/v1/newmessage`,
         message
-      );
+      )
       // console.log(response.data);
       // chatFetch();
 
-      setHasTextInput(false);
+      setHasTextInput(false)
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
-  };
+  }
   const conversationVariants = {
     initial: { x: "100%" },
     animate: { x: "0%" },
     exit: { x: "100%" },
-  };
+  }
 
   return (
     <motion.section
@@ -163,9 +163,6 @@ export default function Home() {
     >
       <ConversationHeader userId={userId} chats={chats} />
       <ConversationBody userId={userId} chats={chats} />
-      <div className="absolute bottom-16 right-10">
-        {isEmojiShown && <EmojiPicker />}
-      </div>
       <ConversationFooter
         messageText={messageText}
         hasTextInput={hasTextInput}
@@ -177,5 +174,5 @@ export default function Home() {
         chatFetch={chatFetch}
       />
     </motion.section>
-  );
+  )
 }

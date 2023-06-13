@@ -1,15 +1,15 @@
-import GetTimeAgo from "@/helper/time";
-import Image from "next/image";
-import Link from "next/link";
+import GetTimeAgo from "@/helper/time"
+import Image from "next/image"
+import Link from "next/link"
 
 function ChatList({ chat, userId }) {
   const otherMember = chat?.members?.filter(
     (member) => member?._id !== userId
-  )[0];
+  )[0]
 
-  const otherMemberName = otherMember?.name;
-  const otherMemberPhotoUrl = otherMember?.photoUrl;
-  const otherMemberIsActive = otherMember?.isActive;
+  const otherMemberName = otherMember?.name
+  const otherMemberPhotoUrl = otherMember?.photoUrl
+  const otherMemberIsActive = otherMember?.isActive
 
   return (
     <Link
@@ -38,8 +38,8 @@ function ChatList({ chat, userId }) {
               {userId === chat?.lastMessage?.senderId && "You: "}
               {chat?.lastMessage?.messageType === "image"
                 ? "sent a photo"
-                : chat?.lastMessage?.text}
-               ·
+                : chat?.lastMessage?.text}{" "}
+              ·
             </p>
             <p className="w-1/4 text-right text-gray-600">
               {GetTimeAgo(chat?.lastMessage?.createdAt)}
@@ -56,7 +56,7 @@ function ChatList({ chat, userId }) {
             />
           </div> */}
     </Link>
-  );
+  )
 }
 
-export default ChatList;
+export default ChatList
